@@ -108,10 +108,8 @@ class SimpleCompleter:
 
 
 relations = {}
-# TODO: Add _ANTIJOIN here
 completer = SimpleCompleter(
-    ['SURVEY', 'LIST', 'LOAD ', 'UNLOAD ', 'HELP ', 'QUIT', 'SAVE ', '_PRODUCT ', '_UNION ', '_INTERSECTION ',
-     '_DIFFERENCE ', '_JOIN ', '_LJOIN ', '_RJOIN ', '_FJOIN ', '_PROJECTION ', '_RENAME_TO ', '_SELECTION ', '_RENAME ', '_DIVISION '])
+    ['SURVEY', 'LIST', 'LOAD ', 'UNLOAD ', 'HELP ', 'QUIT', 'SAVE ', '_PRODUCT ', '_UNION ', '_INTERSECTION ', '_DIFFERENCE ', '_JOIN ', '_LJOIN ', '_RJOIN ', '_FJOIN ', '_PROJECTION ', '_RENAME_TO ', '_SELECTION ', '_RENAME ', '_DIVISION ', '_ANTIJOIN '])
 
 
 def load_relation(filename: str, defname:Optional[str]=None) -> Optional[str]:
@@ -198,6 +196,7 @@ def exec_line(command: str) -> None:
     '''
     command = command.strip()
 
+    # If it's a comment, return
     if command.startswith(';'):
         return
     elif command == 'QUIT':
@@ -210,6 +209,8 @@ def exec_line(command: str) -> None:
                 print(i)
     elif command == 'SURVEY':
         survey()
+
+    # Load something
     elif command.startswith('LOAD '):  # Loads a relation
         pars = command.split(' ')
         if len(pars) == 1:
