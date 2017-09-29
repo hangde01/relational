@@ -338,7 +338,7 @@ class Relation (object):
                 newt.content.add(tuple(item))
 
         return newt
-# TODO: Look at this example for antijoin
+
     def join(self, other: 'Relation') -> 'Relation':
         '''
         Natural join, joins on shared attributes (one or more). If there are no
@@ -362,7 +362,7 @@ class Relation (object):
 
         # Non shared ids of the other relation
         noid = [i for i in range(len(other.header)) if i not in oid]
-
+# TODO: Change the != back to ==
         for i in self.content:
             for j in other.content:
                 match = True
@@ -378,10 +378,6 @@ class Relation (object):
     def antijoin(self, other: 'Relation') -> 'Relation':
         '''
         Antijoin returns one copy of each row in the first table for which no match is found.
-
-        Must search of the NOT of the opposite.
-
-        Given a certain thing, return the opposite.
         '''
 
         # List of attributes in common between the relations

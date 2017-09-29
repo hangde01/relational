@@ -399,6 +399,7 @@ def parse(expr: str) -> CallableString:
     CallableString (a string that can be called) whith the corresponding
     Python expression.
     '''
+    print("Hello Hawkins")
     return tree(expr).toPython()
 
 if __name__ == "__main__":
