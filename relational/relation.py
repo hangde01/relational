@@ -338,7 +338,7 @@ class Relation (object):
                 newt.content.add(tuple(item))
 
         return newt
-
+# TODO: Look at this example for antijoin
     def join(self, other: 'Relation') -> 'Relation':
         '''
         Natural join, joins on shared attributes (one or more). If there are no
