@@ -374,11 +374,46 @@ class Relation (object):
                     newt.content.add(tuple(item))
 
         return newt
-
+ 
+#Literally the same code as join       
     def antijoin(self, other: 'Relation') -> 'Relation':
         '''
-        Antijoin returns one copy of each row in the first table for which no match is found.
+        Natural join, joins on shared attributes (one or more). If there are no
+        shared attributes, it will behave as the cartesian product.
         '''
+
+        # List of attributes in common between the relations
+        shared = self.header.intersection(other.header)
+
+        newt = relation()  # Creates the new relation
+
+        # Creating the header with all the fields, done like that because order is
+        # needed
+        h = (i for i in other.header if i not in shared)
+        newt.header = Header(chain(self.header, h))
+
+        # Shared ids of self
+        sid = self.header.getAttributesId(shared)
+        # Shared ids of the other relation
+        oid = other.header.getAttributesId(shared)
+
+        # Non shared ids of the other relation
+        noid = [i for i in range(len(other.header)) if i not in oid]
+# TODO: Change the != back to ==
+        for i in self.content:
+            for j in other.content:
+                match = True
+                for k in range(len(sid)):
+                    match = match and (i[sid[k]] == j[oid[k]])
+
+                if match:
+                    item = chain(i, (j[l] for l in noid))
+                    newt.content.add(tuple(item))
+
+        return newt
+
+    '''def antijoin(self, other: 'Relation') -> 'Relation':
+
 
         # List of attributes in common between the relations
         shared = self.header.intersection(other.header)
@@ -408,7 +443,7 @@ class Relation (object):
                     item = chain(i, (j[l] for l in noid))
                     newt.content.add(tuple(item))
 
-        return newt
+        return newt'''
 
     def __eq__(self, other):
         if not isinstance(other, relation):

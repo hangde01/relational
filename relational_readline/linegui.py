@@ -109,7 +109,7 @@ class SimpleCompleter:
 
 relations = {}
 completer = SimpleCompleter(
-    ['SURVEY', 'LIST', 'LOAD ', 'UNLOAD ', 'HELP ', 'QUIT', 'SAVE ', '_PRODUCT ', '_UNION ', '_INTERSECTION ', '_DIFFERENCE ', '_JOIN ', '_LJOIN ', '_RJOIN ', '_FJOIN ', '_PROJECTION ', '_RENAME_TO ', '_SELECTION ', '_RENAME ', '_DIVISION ', 'antijoin ', 'project'])
+    ['SURVEY', 'LIST', 'LOAD ', 'UNLOAD ', 'HELP ', 'QUIT', 'SAVE ', '_PRODUCT ', '_UNION ', '_INTERSECTION ', '_DIFFERENCE ', '_JOIN ', '_LJOIN ', '_RJOIN ', '_FJOIN ', '_PROJECTION ', '_RENAME_TO ', '_SELECTION ', '_RENAME ', '_DIVISION ', '_ANTIJOIN', 'antijoin ', 'project'])
 
 
 def load_relation(filename: str, defname:Optional[str]=None) -> Optional[str]:
@@ -271,6 +271,8 @@ def replacements(query: str) -> str:
         ('_SELECTION', parser.SELECTION),
         ('_RENAME', parser.RENAME),
         ('_DIVISION', parser.DIVISION),
+        ('_ANTIJOIN', parser.ANTIJOIN),
+        ('antijoin', parser.ANTIJOIN),
     )
     for asciiop, op in rules:
         query = query.replace(asciiop, op)

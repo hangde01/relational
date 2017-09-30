@@ -45,15 +45,16 @@ PROJECTION = 'π'
 SELECTION = 'σ'
 RENAME = 'ρ'
 ARROW = '➡'
+ANTIJOIN = '▷'
 
 b_operators = (PRODUCT, DIFFERENCE, UNION, INTERSECTION, DIVISION,
-               JOIN, JOIN_LEFT, JOIN_RIGHT, JOIN_FULL)  # List of binary operators
+               JOIN, JOIN_LEFT, JOIN_RIGHT, JOIN_FULL, ANTIJOIN)  # List of binary operators
 u_operators = (PROJECTION, SELECTION, RENAME)  # List of unary operators
 
 # Associates operator with python method
 op_functions = {
     PRODUCT: 'product', DIFFERENCE: 'difference', UNION: 'union', INTERSECTION: 'intersection', DIVISION: 'division', JOIN: 'join',
-    JOIN_LEFT: 'outer_left', JOIN_RIGHT: 'outer_right', JOIN_FULL: 'outer', PROJECTION: 'projection', SELECTION: 'selection', RENAME: 'rename'}
+    JOIN_LEFT: 'outer_left', JOIN_RIGHT: 'outer_right', JOIN_FULL: 'outer', PROJECTION: 'projection', SELECTION: 'selection', RENAME: 'rename', ANTIJOIN: 'antijoin'}
 
 
 class TokenizerException (Exception):
