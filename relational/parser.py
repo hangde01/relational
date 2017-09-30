@@ -400,13 +400,11 @@ def parse(expr: str) -> CallableString:
     Python expression.
     '''
     print("Hello Hawkins")
-    print(expr)
     if expr[0] == PROJECTION:
         if expr[1] == "(":
             projectOn = expr[2:-1]
             projectionParts = projectOn.replace(' ', '').split('{')
             expr = expr[0] + projectionParts[1][0:-1] + '(' + projectionParts[0][0:-1] + ')'
-    print(expr)
     return tree(expr).toPython()
 
 if __name__ == "__main__":
