@@ -401,11 +401,18 @@ def parse(expr: str) -> CallableString:
     Python expression.
     '''
     print("Hello Hawkins")
+    
     if expr[0] == PROJECTION:
         if expr[1] == "(":
             projectOn = expr[2:-1]
             projectionParts = projectOn.replace(' ', '').split('{')
             expr = expr[0] + projectionParts[1][0:-1] + '(' + projectionParts[0][0:-1] + ')'
+    
+    elif expr[0] == ANTIJOIN:
+    	antijoinOn = expr[2:-1]
+    	antijoinParts = antijoinOn.split(',')
+    	expr = antijoinParts[0] + ' ' + expr[0] + ' ' + antijoinParts[1]
+
     return tree(expr).toPython()
 
 if __name__ == "__main__":
