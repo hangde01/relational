@@ -373,17 +373,10 @@ class Relation (object):
                     newt.content.add(tuple(item))
 
         return newt
-<<<<<<< Updated upstream
-
-    def antijoin(self, other: 'Relation') -> 'Relation':
-        '''
-        Antijoin returns one copy of each row in the first table for which no match is found.
-=======
     
     def antijoin(self, other: 'Relation', column1: str, column2: str) -> 'Relation':
         '''
         All values from table1 where not in table2.
->>>>>>> Stashed changes
         '''
 
         # List of attributes in common between the relations
@@ -395,12 +388,6 @@ class Relation (object):
         h = (i for i in other.header if i not in shared)
         newt.header = Header(chain(self.header, h))
 
-<<<<<<< Updated upstream
-        # Shared ids of self
-        sid = self.header.getAttributesId(shared)
-        # Shared ids of the other relation
-        oid = other.header.getAttributesId(shared)
-=======
         # Assigns columns from given parameters
         sid = self.header.getAttributesId(column1)
         oid = other.header.getAttributesId(column2)
@@ -409,7 +396,6 @@ class Relation (object):
         #sid = self.header.getAttributesId(shared)
         # Shared ids of the other relation
         #oid = other.header.getAttributesId(shared)
->>>>>>> Stashed changes
 
         # Non shared ids of the other relation
         noid = [i for i in range(len(other.header)) if i not in oid]
