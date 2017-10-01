@@ -317,7 +317,7 @@ def exec_query(command: str) -> None:
         print(colorize(str(e), ERROR_COLOR))
 
 
-def main(files=[]):
+def main(files=['samples/people.csv', 'samples/skills.csv']):
     printtty(colorize('> ', PROMPT_COLOR) + "; Type HELP to get the HELP")
     printtty(colorize('> ', PROMPT_COLOR) +
            "; Completion is activated using the tab (if supported by the terminal)")
