@@ -374,7 +374,7 @@ class Relation (object):
 
         return newt
     
-    def antijoin(self, other: 'Relation', column1: str, column2: str) -> 'Relation':
+    def antijoin(self, other: 'Relation') -> 'Relation':
         '''
         All values from table1 where not in table2.
         '''
@@ -389,13 +389,15 @@ class Relation (object):
         newt.header = Header(chain(self.header, h))
 
         # Assigns columns from given parameters
-        sid = self.header.getAttributesId(column1)
-        oid = other.header.getAttributesId(column2)
+        # sid = self.header.getAttributesId(column1)
+        # oid = other.header.getAttributesId(column2)
+        # If the tables don't have the chosen columns, then there's a built-in error that will be raised.
+        # These columns, chosen by the user, will be used below.
 
         # Shared ids of self
-        #sid = self.header.getAttributesId(shared)
+        sid = self.header.getAttributesId(shared)
         # Shared ids of the other relation
-        #oid = other.header.getAttributesId(shared)
+        oid = other.header.getAttributesId(shared)
 
         # Non shared ids of the other relation
         noid = [i for i in range(len(other.header)) if i not in oid]

@@ -45,19 +45,14 @@ PROJECTION = 'π'
 SELECTION = 'σ'
 RENAME = 'ρ'
 ARROW = '➡'
+ANTIJOIN = '▷'
 
-b_operators = (PRODUCT, DIFFERENCE, UNION, INTERSECTION, DIVISION,
-               JOIN, JOIN_LEFT, JOIN_RIGHT, JOIN_FULL)  # List of binary operators
+b_operators = (PRODUCT, DIFFERENCE, UNION, INTERSECTION, DIVISION, JOIN, JOIN_LEFT, JOIN_RIGHT, JOIN_FULL, ANTIJOIN)  # List of binary operators
 u_operators = (PROJECTION, SELECTION, RENAME)  # List of unary operators
 
 # Associates operator with python method
 op_functions = {
-<<<<<<< Updated upstream
-    PRODUCT: 'product', DIFFERENCE: 'difference', UNION: 'union', INTERSECTION: 'intersection', DIVISION: 'division', JOIN: 'join',
-    JOIN_LEFT: 'outer_left', JOIN_RIGHT: 'outer_right', JOIN_FULL: 'outer', PROJECTION: 'projection', SELECTION: 'selection', RENAME: 'rename'}
-=======
     PRODUCT: 'product', DIFFERENCE: 'difference', UNION: 'union', INTERSECTION: 'intersection', DIVISION: 'division', JOIN: 'join', JOIN_LEFT: 'outer_left', JOIN_RIGHT: 'outer_right', JOIN_FULL: 'outer', PROJECTION: 'projection', SELECTION: 'selection', RENAME: 'rename', ANTIJOIN: 'antijoin'}
->>>>>>> Stashed changes
 
 
 class TokenizerException (Exception):
@@ -140,6 +135,7 @@ class Node:
         # within sub-lists, they won't be found here, ensuring that they will
         # have highest priority.
         for i in range(len(expression) - 1, -1, -1):
+            print(expression[i])
             if expression[i] in b_operators:  # Binary operator
                 self.kind = BINARY
                 self.name = expression[i]
@@ -189,10 +185,10 @@ class Node:
         Same as toPython but returns a regular string
         '''
         if self.name in b_operators:
-            if self.name == ANTIJOIN:
-                # Want to return a.antijoin(b, c1, c2)
-                # Right now is a.antijoin(b)
-                return '%s.%s(%s, %s, %s)' % (self.left.toPython(), op_functions[self.name], self.right.toPython()) #column1, column2
+            # if self.name == ANTIJOIN:
+            #     # Want to return a.antijoin(b, c1, c2)
+            #     # Right now is a.antijoin(b)
+            #     return '%s.%s(%s)' % (self.left.toPython(), op_functions[self.name], self.right.toPython()) #column1, column2
             return '%s.%s(%s)' % (self.left.toPython(), op_functions[self.name], self.right.toPython())
         
         elif self.name in u_operators:
@@ -410,12 +406,10 @@ def parse(expr: str) -> CallableString:
     if expr[0] == PROJECTION:
         if expr[1] == "(":
             projectOn = expr[2:-1]
-<<<<<<< Updated upstream
-            projectionParts = projectOn.replace(' ', '').split(',')
-            expr = expr[0] + projectionParts[1][1:-1] + '(' + projectionParts[0] + ')'
-=======
             projectionParts = projectOn.replace(' ', '').split('{')
             expr = expr[0] + projectionParts[1][0:-1] + '(' + projectionParts[0][0:-1] + ')'
+
+    
 
     if expr[0] == ANTIJOIN:
         symbol = expr[0]
@@ -430,11 +424,8 @@ def parse(expr: str) -> CallableString:
         # parsedExpr => table1.antijoin(table2, column1, column2)
         # error: 'str' object is not callable
         print(parsedExpr)
-        return parsedExpr
-
-    # If I bypass the parser, the error above pops up. I'm not finished with it, but I'm headed to work and I can focus on it there. Will keep you updated.
+        return expr
     
->>>>>>> Stashed changes
     return tree(expr).toPython()
 
 if __name__ == "__main__":
