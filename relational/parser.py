@@ -407,7 +407,7 @@ def parse(expr: str) -> CallableString:
         if expr[1] == "(":
             projectOn = expr[2:-1]
             projectionParts = projectOn.replace(' ', '').split('{')
-            expr = expr[0] + projectionParts[1][0:-1] + '(' + projectionParts[0][0:-1] + ')'
+            expr = expr[0] + projectionParts[1][1:-1] + '(' + projectionParts[0][0:-1] + ')'
 
     
 
@@ -423,7 +423,6 @@ def parse(expr: str) -> CallableString:
         parsedExpr = table1 + ".antijoin(" + table2 + ", " + fields[0] + ", " + fields[1] + ")"
         # parsedExpr => table1.antijoin(table2, column1, column2)
         # error: 'str' object is not callable
-        print(parsedExpr)
         return expr
     
     return tree(expr).toPython()
