@@ -310,6 +310,7 @@ def exec_query(command: str) -> None:
     # Execute query
     try:
         pyquery = parser.parse(query)
+        print(pyquery)
         result = pyquery(relations)
 
         printtty(colorize("-> query: %s" % pyquery, COLOR_GREEN))
@@ -322,14 +323,10 @@ def exec_query(command: str) -> None:
 
         completer.add_completion(relname)
     except Exception as e:
-        print("Pyquery")
-        print(pyquery)
-        print("Result")
-        print(result)
         print(colorize(str(e), ERROR_COLOR))
 
 
-def main(files=['samples/people.csv', 'samples/skills.csv']):
+def main(files=['samples/people.csv', 'samples/skills.csv', 'samples/rooms.csv']):
     printtty(colorize('> ', PROMPT_COLOR) + "; Type HELP to get the HELP")
     printtty(colorize('> ', PROMPT_COLOR) +
            "; Completion is activated using the tab (if supported by the terminal)")
