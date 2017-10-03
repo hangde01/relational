@@ -191,7 +191,7 @@ class Node:
             #     # Right now is a.antijoin(b)
             #     return '%s.%s(%s)' % (self.left.toPython(), op_functions[self.name], self.right.toPython()) #column1, column2
             return '%s.%s(%s)' % (self.left.toPython(), op_functions[self.name], self.right.toPython())
-        
+
         elif self.name in u_operators:
             prop = self.prop
 
@@ -421,10 +421,9 @@ def parse(expr: str) -> CallableString:
         # expr => table1 ▷ table2 id, id (for example)
         # Format can be changed as needed
         parsedExpr = table1 + ".antijoin(" + table2 + ", " + fields[0] + ", " + fields[1] + ")"
+        return CallableString(parsedExpr)
         # parsedExpr => table1.antijoin(table2, column1, column2)
         # error: 'str' object is not callable
-        return expr
-    
 
     return tree(expr).toPython()
 
