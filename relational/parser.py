@@ -136,7 +136,6 @@ class Node:
         # within sub-lists, they won't be found here, ensuring that they will
         # have highest priority.
         for i in range(len(expression) - 1, -1, -1):
-            print(expression[i])
             if expression[i] in b_operators:  # Binary operator
                 self.kind = BINARY
                 self.name = expression[i]
@@ -417,8 +416,7 @@ def parse(expr: str) -> CallableString:
         fields = antijoinParts[2].replace(' ', '').split('=')
         # expr => table1 ▷ table2 id, id (for example)
         # Format can be changed as needed
-        parsedExpr = antijoinParts[0] + ".antijoin(" + antijoinParts[1] + ", " + fields[0] + ", " + fields[1] + ")"
-        print(parsedExpr)
+        parsedExpr = antijoinParts[0] + ".antijoin(" + antijoinParts[1] + ", '" + fields[0] + "', '" + fields[1] + "')"
         return CallableString(parsedExpr)
         # parsedExpr => table1.antijoin(table2, column1, column2)
         # error: 'str' object is not callable

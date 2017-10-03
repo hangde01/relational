@@ -310,7 +310,6 @@ def exec_query(command: str) -> None:
     # Execute query
     try:
         pyquery = parser.parse(query)
-        print(pyquery)
         result = pyquery(relations)
 
         printtty(colorize("-> query: %s" % pyquery, COLOR_GREEN))
