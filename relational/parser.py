@@ -47,6 +47,7 @@ RENAME = 'ρ'
 ARROW = '➡'
 ANTIJOIN = '▷'
 
+
 b_operators = (PRODUCT, DIFFERENCE, UNION, INTERSECTION, DIVISION, JOIN, JOIN_LEFT, JOIN_RIGHT, JOIN_FULL, ANTIJOIN)  # List of binary operators
 u_operators = (PROJECTION, SELECTION, RENAME)  # List of unary operators
 
@@ -403,13 +404,12 @@ def parse(expr: str) -> CallableString:
     CallableString (a string that can be called) whith the corresponding
     Python expression.
     '''
+
     if expr[0] == PROJECTION:
         if expr[1] == "(":
             projectOn = expr[2:-1]
             projectionParts = projectOn.replace(' ', '').split('{')
             expr = expr[0] + projectionParts[1][0:-1] + '(' + projectionParts[0][0:-1] + ')'
-
-    
 
     if expr[0] == ANTIJOIN:
         symbol = expr[0]
@@ -425,6 +425,7 @@ def parse(expr: str) -> CallableString:
         # error: 'str' object is not callable
         return expr
     
+
     return tree(expr).toPython()
 
 if __name__ == "__main__":
