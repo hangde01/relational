@@ -272,6 +272,7 @@ def replacements(query: str) -> str:
         ('_RENAME', parser.RENAME),
         ('_DIVISION', parser.DIVISION),
         ('_ANTIJOIN', parser.ANTIJOIN),
+        ('antijoin', parser.ANTIJOIN)
     )
     for asciiop, op in rules:
         query = query.replace(asciiop, op)
