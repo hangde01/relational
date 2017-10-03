@@ -272,7 +272,6 @@ def replacements(query: str) -> str:
         ('_RENAME', parser.RENAME),
         ('_DIVISION', parser.DIVISION),
         ('_ANTIJOIN', parser.ANTIJOIN),
-        ('antijoin', parser.ANTIJOIN),
     )
     for asciiop, op in rules:
         query = query.replace(asciiop, op)
@@ -300,6 +299,12 @@ def exec_query(command: str) -> None:
     # Finds the name in where to save the query
     parts = command.split('=', 1)
     relname,query = maintenance.UserInterface.split_query(command)
+    # print("Parts")
+    # print(parts)
+    # print("relname")
+    # print(relname)
+    # print("Query")
+    # print(query)
 
     # Execute query
     try:
@@ -316,10 +321,14 @@ def exec_query(command: str) -> None:
 
         completer.add_completion(relname)
     except Exception as e:
+        print("Pyquery")
+        print(pyquery)
+        print("Result")
+        print(result)
         print(colorize(str(e), ERROR_COLOR))
 
 
-def main(files=[]):
+def main(files=['samples/people.csv', 'samples/skills.csv']):
     printtty(colorize('> ', PROMPT_COLOR) + "; Type HELP to get the HELP")
     printtty(colorize('> ', PROMPT_COLOR) +
            "; Completion is activated using the tab (if supported by the terminal)")

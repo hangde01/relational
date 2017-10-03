@@ -350,8 +350,7 @@ class Relation (object):
 
         newt = relation()  # Creates the new relation
 
-        # Creating the header with all the fields, done like that because order is
-        # needed
+        # Creating the header with all the fields, done like that because order is needed
         h = (i for i in other.header if i not in shared)
         newt.header = Header(chain(self.header, h))
 
@@ -362,7 +361,7 @@ class Relation (object):
 
         # Non shared ids of the other relation
         noid = [i for i in range(len(other.header)) if i not in oid]
-# TODO: Change the != back to ==
+
         for i in self.content:
             for j in other.content:
                 match = True
@@ -374,11 +373,10 @@ class Relation (object):
                     newt.content.add(tuple(item))
 
         return newt
- 
-#Literally the same code as join       
+
     def antijoin(self, other: 'Relation') -> 'Relation':
         '''
-        Antijoin returns one copy of each row in the first table for which no match is found.
+        All values from table1 where not in table2.
         '''
 
         # List of attributes in common between the relations
@@ -386,10 +384,15 @@ class Relation (object):
 
         newt = relation()  # Creates the new relation
 
-        # Creating the header with all the fields, done like that because order is
-        # needed
+        # Creating the header with all the fields, done like that because order is needed
         h = (i for i in other.header if i not in shared)
         newt.header = Header(chain(self.header, h))
+
+        # Assigns columns from given parameters
+        # sid = self.header.getAttributesId(column1)
+        # oid = other.header.getAttributesId(column2)
+        # If the tables don't have the chosen columns, then there's a built-in error that will be raised.
+        # These columns, chosen by the user, will be used below.
 
         # Shared ids of self
         sid = self.header.getAttributesId(shared)
@@ -431,7 +434,7 @@ class Relation (object):
         return len(self.content)
 
     def __str__(self):
-        m_len = [len(i) for i in self.header]  # Maximum lenght string
+        m_len = [len(i) for i in self.header]  # Maximum length string
 
         for f in self.content:
             for col, i in enumerate(f):
