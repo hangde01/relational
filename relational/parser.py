@@ -407,7 +407,7 @@ def parse(expr: str) -> CallableString:
         if expr[1] == "(":
             projectOn = expr[2:-1]
             projectionParts = projectOn.replace(' ', '').split('{')
-            expr = expr[0] + projectionParts[1][1:-1] + '(' + projectionParts[0][0:-1] + ')'
+            expr = expr[0] + projectionParts[1][0:-1] + '(' + projectionParts[0][0:-1] + ')'
 
     
 
