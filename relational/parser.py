@@ -412,15 +412,13 @@ def parse(expr: str) -> CallableString:
             expr = expr[0] + projectionParts[1][0:-1] + '(' + projectionParts[0][0:-1] + ')'
 
     if expr[0] == ANTIJOIN:
-        symbol = expr[0]
-        parameters = expr[2:-1].replace(" ", "").split(",")
-        table1 = parameters[0]
-        table2 = parameters[1]
-        fields = parameters[2].split("=")
-        expr = table1 + " " + symbol + " " + table2 + " " + fields[0] + ", " + fields[1]
+        antijoinOn = expr[2:-1]
+        antijoinParts = antijoinOn.replace(' ', '').split(',')
+        fields = antijoinParts[2].replace(' ', '').split('=')
         # expr => table1 ▷ table2 id, id (for example)
         # Format can be changed as needed
-        parsedExpr = table1 + ".antijoin(" + table2 + ", " + fields[0] + ", " + fields[1] + ")"
+        parsedExpr = antijoinParts[0] + ".antijoin(" + antijoinParts[1] + ", " + fields[0] + ", " + fields[1] + ")"
+        print(parsedExpr)
         return CallableString(parsedExpr)
         # parsedExpr => table1.antijoin(table2, column1, column2)
         # error: 'str' object is not callable
