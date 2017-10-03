@@ -373,23 +373,22 @@ class Relation (object):
                     newt.content.add(tuple(item))
 
         return newt
-    
+
     def antijoin(self, other: 'Relation', column1: str, column2: str) -> 'Relation':
         '''
         All values from table1 where not in table2.
         '''
 
+        column1 = {column1}
+        column2 = {column2}
         # List of attributes in common between the relations
-        shared = self.header.intersection(other.header)
+        shared = column1 | column2
 
         newt = relation()  # Creates the new relation
 
         # Creating the header with all the fields, done like that because order is needed
         h = (i for i in other.header if i not in shared)
         newt.header = Header(chain(self.header, h))
-
-        print(column1)
-        print(column2)
 
         # Assigns columns from given parameters
         sid = self.header.getAttributesId(column1)
@@ -404,14 +403,14 @@ class Relation (object):
 
         # Non shared ids of the other relation
         noid = [i for i in range(len(other.header)) if i not in oid]
-        
+
         for i in self.content:
             for j in other.content:
                 match = True
                 for k in range(len(sid)):
                     match = match and (i[sid[k]] == j[oid[k]])
 
-                if match:
+                if not match:
                     item = chain(i, (j[l] for l in noid))
                     newt.content.add(tuple(item))
 
