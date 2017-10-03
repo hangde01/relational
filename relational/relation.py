@@ -404,12 +404,12 @@ class Relation (object):
 
         # Non shared ids of the other relation
         noid = [i for i in range(len(other.header)) if i not in oid]
-
+        
         for i in self.content:
             for j in other.content:
                 match = True
                 for k in range(len(sid)):
-                    match = match and (i[sid[k]] != j[oid[k]])
+                    match = match and (i[sid[k]] == j[oid[k]])
 
                 if match:
                     item = chain(i, (j[l] for l in noid))
